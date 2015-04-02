@@ -4,7 +4,7 @@
 ### dependent IDE to compile less and coffee file.
 
 #change log
-### add gulp task:
-###### `gulp`  ------ watch css, js, and views direction files. when change reload browser.
-###### `gulp watch-css`  ------ just watch css files. when change reload browser.
-###### `gulp watch-views-js`  ------ just watch js,and views direction files. when change reload browser.
+## version 0.0.4
+### change gulp task:
+###### `gulp`  ------ watch less, coffee, js, and views direction files.when changed compile them.
+###### `gulp localhost`  ------ use browser-sync tool watch less, coffee, js, and views direction files. when change compile them and reload browser.
