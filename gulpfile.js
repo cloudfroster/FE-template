@@ -2,60 +2,82 @@
  * gulp 自动构建任务
  * made by marchen
  * time 2015/4/2
+ * 待解决问题,less文件修改只会刷新修改的文件,如果一个被引用的文件修改了,引用文件不会自动刷新,需要手动保存下.
  */
  
 var pkg = require('./package.json');
 var gulp = require('gulp');
 var plumber = require('gulp-plumber');    //修复node错误
+var gutil = require('gulp-util');         //gulp工具,用来在流中输出
 var changed = require('gulp-changed');    //只通过改变的文件流
 var less = require('gulp-less');          //编译less
 var watchLess = require('gulp-watch-less');//监视less文件
 var coffee = require('gulp-coffee');      //编译coffee
 var sourcemaps = require('gulp-sourcemaps');//生成map文件
+var rename = require("gulp-rename");      //重命名
+var uglify = require('gulp-uglify');      //压缩js
 var header = require('gulp-header');      //头部banner
 var browserSync = require('browser-sync');//浏览器同步
 var reload = browserSync.reload;		  //刷新浏览器
 
 var now = new Date().toLocaleString();
 var proxyUrl = "localhost:3000";
-var cssUrl = ["./public/css/**/*.css"];
-var viewsAJsUrl = ['./views/**/*.*','./public/js/**/*.js','!./public/js/lib/'];
+var viewsAJsUrl = ['./views/**/*.*','./public/js/**/*.min.js','!./public/js/lib/**/*.js'];
 var lessUrl = ['./public/css/**/*.less','!./public/css/maxin/**/*.less','!./public/css/common/**/*.less'];
 var lessDest = './public/css/';
 var coffeeUrl = ['./public/js/**/*.coffee'];
 var coffeeDest = './public/js';
+var jsUrl = ['./public/js/**/*.js','!./public/js/lib/**/*.js','!./public/js/**/*.min.js']
+var jsDest = './public/js';
 
 //-------------------------------------------------//
 //|          默认开始编译所有less和coffee文件
 //|          监视css,js,和views下的的文件,刷新浏览器(注意:会去编译less和coffee)
 //-------------------------------------------------//
-gulp.task('default',['compile-less', 'compile-coffee', 'watch-compile'],function() {console.log('\n编译less为css,编译coffee为js完成.\n默认不会打开browserSync工具.请使用 gulp localhost 打开浏览器同步工具.\n开始监听less,coffee文件......\n');});
-gulp.task('localhost',['compile-less', 'compile-coffee', 'watch-compile-reload'],function() {console.log('\n编译less为css,编译coffee为js完成.\n开始监听less,coffee文件......\n等待刷新浏览器......\n');});
+gulp.task('default',['compile-less', 'compile-coffee', 'compress-js', 'watch-compile'],function() {
+    gutil.log('\n\n',gutil.colors.cyan('编译less为css,编译coffee为js完成.\n'),'默认不会打开browserSync工具.请使用',gutil.colors.red('gulp localhost'),'打开浏览器同步工具.\n' + 
+    ' 编译规则:\n yyy.less   ---- yyy.css(压缩)\n xxx.coffee ---- xxx.min.js(压缩) \n yyy.js   ---- yyy.min.js(压缩) \n 产生的sourcemaps文件放在sourcemaps文件夹下.\n' + ' 开始监听less,coffee文件......\n');
+});
+gulp.task('localhost',['compile-less', 'compile-coffee', 'watch-compile-reload'],function() {
+    gutil.log('\n\n',gutil.colors.cyan('编译less为css,编译coffee为js完成.\n'),'打开browserSync工具\n' + 
+    ' 编译规则:\n yyy.less   ---- yyy.css(压缩)\n xxx.coffee ---- xxx.min.js(压缩) \n yyy.js   ---- yyy.min.js(压缩) \n 产生的sourcemaps文件放在sourcemaps文件夹下.\n' + ' 开始监听less,coffee文件......\n');
+});
 
 //-------------------------------------------------//
-//|   开始监视less,coffee,改变后编译,不刷新浏览器
+//|  开始监视less,coffee,js改变后编译,不刷新浏览器
 //-------------------------------------------------//
 gulp.task('watch-compile', function() {
     gulp.watch(lessUrl, function() {
-        gulp.src(lessUrl)
+        return gulp.src(lessUrl)
           .pipe(sourcemaps.init())
           .pipe(plumber())
           .pipe(changed(lessDest, {extension: '.css'}))
-          .pipe(less())
-          .pipe(sourcemaps.write('./sourcemaps'))
-          .pipe(gulp.dest(lessDest));
-        return console.log('compileless passed!');
-    });
+          .pipe(less({compress:true})).on('error', function(err){gutil.log(gutil.colors.red('less compile error!\n') + err.message)})
+          .pipe(gulp.dest(lessDest))
+          .pipe(sourcemaps.write('./sourcemaps'));
+    });   
     gulp.watch(coffeeUrl, function() {
-       gulp.src(coffeeUrl)
+       return gulp.src(coffeeUrl)
          .pipe(sourcemaps.init())
          .pipe(plumber())
-         .pipe(changed(coffeeDest, {extension: '.js'}))
-         .pipe(coffee({bare: true}))
-         .pipe(sourcemaps.write('./sourcemaps'))
-         .pipe(gulp.dest(coffeeDest));
-       return console.log('compilecoffee passed!');
+         .pipe(changed(coffeeDest, {extension: '.min.js'}))
+         .pipe(coffee({bare: true})).on('error', function(err){gutil.log(gutil.colors.red('coffee compile error!\n') + err)})
+         .pipe(uglify())
+         .pipe(rename({suffix:'.min'}))
+         .pipe(gulp.dest(coffeeDest))
+         .pipe(sourcemaps.write('./sourcemaps'));
     });
+    gulp.watch(jsUrl, function() {
+       return gulp.src(jsUrl)
+         .pipe(sourcemaps.init())
+         .pipe(plumber())
+         .pipe(changed(jsDest, {extension: '.min.js'}))
+         .pipe(uglify()).on('error', function(err){gutil.log(gutil.colors.red('js compress error!\n') + err)})
+         .pipe(rename({suffix:'.min'}))
+         .pipe(gulp.dest(jsDest))
+         .pipe(sourcemaps.write('./sourcemaps'));
+    });
+    
 });
 
 //-------------------------------------------------//
@@ -67,25 +89,35 @@ gulp.task('watch-compile-reload', function() {
         proxy: proxyUrl
     });
     gulp.watch(lessUrl, function() {
-        gulp.src(lessUrl)
+        return gulp.src(lessUrl)
           .pipe(sourcemaps.init())
           .pipe(plumber())
           .pipe(changed(lessDest, {extension: '.css'}))
-          .pipe(less())
-          .pipe(sourcemaps.write('./sourcemaps'))
+          .pipe(less({compress:true})).on('error', function(err){gutil.log(gutil.colors.red('less compile error!\n') + err.message)})
+          .pipe(sourcemaps.write('./sourcemaps'));
           .pipe(reload({stream:true}))
           .pipe(gulp.dest(lessDest));
-        return console.log('compileless passed!');
     });
     gulp.watch(coffeeUrl, function() {
        gulp.src(coffeeUrl)
          .pipe(sourcemaps.init())
          .pipe(plumber())
-         .pipe(changed(coffeeDest, {extension: '.js'}))
-         .pipe(coffee({bare: true}))
-         .pipe(sourcemaps.write('./sourcemaps'))
+         .pipe(changed(coffeeDest, {extension: '.min.js'}))
+         .pipe(coffee({bare: true})).on('error', function(err){gutil.log(gutil.colors.red('coffee compile error!\n') + err)})
+         .pipe(uglify())
+         .pipe(rename({suffix:'.min'}))
          .pipe(gulp.dest(coffeeDest))
-       return console.log('compilecoffee passed!');
+         .pipe(sourcemaps.write('./sourcemaps'));
+    });
+    gulp.watch(jsUrl, function() {
+       return gulp.src(jsUrl)
+         .pipe(sourcemaps.init())
+         .pipe(plumber())
+         .pipe(changed(jsDest, {extension: '.min.js'}))
+         .pipe(uglify()).on('error', function(err){gutil.log(gutil.colors.red('js compress error!\n') + err)})
+         .pipe(rename({suffix:'.min'}))
+         .pipe(gulp.dest(jsDest))
+         .pipe(sourcemaps.write('./sourcemaps'));
     });
     gulp.watch(viewsAJsUrl).on('change',reload);
 });
@@ -96,9 +128,21 @@ gulp.task('watch-compile-reload', function() {
 gulp.task('compile-less', function() {
     return gulp.src(lessUrl)
       .pipe(sourcemaps.init())
-      .pipe(less())
+      .pipe(less({compress:true}))
       .pipe(sourcemaps.write('./sourcemaps'))
       .pipe(gulp.dest(lessDest));
+});
+
+//-------------------------------------------------//
+//|          全部js文件压缩成.min.js
+//-------------------------------------------------//
+gulp.task('compress-js', function() {
+    return gulp.src(jsUrl)
+      .pipe(sourcemaps.init())
+      .pipe(uglify())
+      .pipe(rename({suffix:'.min'}))
+      .pipe(gulp.dest(jsDest))
+      .pipe(sourcemaps.write('./sourcemaps'));
 });
 
 //-------------------------------------------------//
@@ -107,7 +151,9 @@ gulp.task('compile-less', function() {
 gulp.task('compile-coffee', function() {
     return gulp.src(coffeeUrl)
       .pipe(sourcemaps.init())
-      .pipe(coffee({bare: true}))
-      .pipe(sourcemaps.write('./sourcemaps'))
-      .pipe(gulp.dest(coffeeDest));
+      .pipe(coffee()).on('error', function(err){gutil.log(gutil.colors.red('init coffee compile error!\nplease fix it!') + err)})
+      .pipe(uglify())
+      .pipe(rename({suffix:'.min'}))
+      .pipe(gulp.dest(coffeeDest))
+      .pipe(sourcemaps.write('./sourcemaps'));
 });
