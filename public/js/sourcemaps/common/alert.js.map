@@ -1,0 +1,1 @@
+{"version":3,"sources":["common/alert.coffee"],"names":[],"mappings":"AAAA,KAAA,CAAM,cAAN,CAAA,CAAA","file":"common/alert.js","sourceRoot":"/source/","sourcesContent":["alert 'hello coffee'"]}

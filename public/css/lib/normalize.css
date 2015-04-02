@@ -39,3 +39,6 @@ textarea{overflow:auto}
 optgroup{font-weight:bold}
 table{border-collapse:collapse;border-spacing:0}
 td,th{padding:0}
+/*扩展*/
+a{text-decoration: none;color: inherit;}
+ol,ul{list-style:none;margin:0;padding:0;}
