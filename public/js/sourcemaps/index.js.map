@@ -1,1 +1,0 @@
-{"version":3,"sources":["index.coffee"],"names":[],"mappings":"AAIA,IAAA,WAAA;;AAAA,WAAA,GAAc,SAAA,GAAA;SACV,UADU;AAAA,CAAd,CAAA","file":"index.js","sourceRoot":"/source/","sourcesContent":["# made by marchen\n# time at 15/3/30\n# index.coffee use by views/index.ejs\n\ngetMyNameBy = ->\n    'marchen'"]}
