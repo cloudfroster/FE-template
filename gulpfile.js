@@ -64,8 +64,8 @@ gulp.task('watch-compile', function() {
          .pipe(coffee({bare: true})).on('error', function(err){gutil.log(gutil.colors.red('coffee compile error!\n') + err)})
          .pipe(uglify())
          .pipe(rename({suffix:'.min'}))
-         .pipe(gulp.dest(coffeeDest))
-         .pipe(sourcemaps.write('./sourcemaps'));
+         .pipe(sourcemaps.write('./sourcemaps'))
+         .pipe(gulp.dest(coffeeDest));
     });
     gulp.watch(jsUrl, function() {
        return gulp.src(jsUrl)
@@ -74,8 +74,8 @@ gulp.task('watch-compile', function() {
          .pipe(changed(jsDest, {extension: '.min.js'}))
          .pipe(uglify()).on('error', function(err){gutil.log(gutil.colors.red('js compress error!\n') + err)})
          .pipe(rename({suffix:'.min'}))
-         .pipe(gulp.dest(jsDest))
-         .pipe(sourcemaps.write('./sourcemaps'));
+         .pipe(sourcemaps.write('./sourcemaps'))
+         .pipe(gulp.dest(jsDest));
     });
     
 });
@@ -104,10 +104,10 @@ gulp.task('watch-compile-reload', function() {
          .pipe(plumber())
          .pipe(changed(coffeeDest, {extension: '.min.js'}))
          .pipe(coffee({bare: true})).on('error', function(err){gutil.log(gutil.colors.red('coffee compile error!\n') + err)})
-         .pipe(uglify())
+         .pipe(uglify()).on('error', function(err){gutil.log(gutil.colors.red('coffee compile js compress error!\n') + err)})
          .pipe(rename({suffix:'.min'}))
-         .pipe(gulp.dest(coffeeDest))
-         .pipe(sourcemaps.write('./sourcemaps'));
+         .pipe(sourcemaps.write('./sourcemaps'))
+         .pipe(gulp.dest(coffeeDest));
     });
     gulp.watch(jsUrl, function() {
        return gulp.src(jsUrl)
@@ -116,8 +116,8 @@ gulp.task('watch-compile-reload', function() {
          .pipe(changed(jsDest, {extension: '.min.js'}))
          .pipe(uglify()).on('error', function(err){gutil.log(gutil.colors.red('js compress error!\n') + err)})
          .pipe(rename({suffix:'.min'}))
-         .pipe(gulp.dest(jsDest))
-         .pipe(sourcemaps.write('./sourcemaps'));
+         .pipe(sourcemaps.write('./sourcemaps'))
+         .pipe(gulp.dest(jsDest));
     });
     gulp.watch(viewsAJsUrl).on('change',reload);
 });
@@ -141,8 +141,8 @@ gulp.task('compress-js', function() {
       .pipe(sourcemaps.init())
       .pipe(uglify())
       .pipe(rename({suffix:'.min'}))
-      .pipe(gulp.dest(jsDest))
-      .pipe(sourcemaps.write('./sourcemaps'));
+      .pipe(sourcemaps.write('./sourcemaps'))
+      .pipe(gulp.dest(jsDest));
 });
 
 //-------------------------------------------------//
@@ -154,6 +154,6 @@ gulp.task('compile-coffee', function() {
       .pipe(coffee()).on('error', function(err){gutil.log(gutil.colors.red('init coffee compile error!\nplease fix it!') + err)})
       .pipe(uglify())
       .pipe(rename({suffix:'.min'}))
-      .pipe(gulp.dest(coffeeDest))
-      .pipe(sourcemaps.write('./sourcemaps'));
+      .pipe(sourcemaps.write('./sourcemaps'))
+      .pipe(gulp.dest(coffeeDest));
 });
