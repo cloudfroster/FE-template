@@ -94,7 +94,7 @@ gulp.task('watch-compile-reload', function() {
           .pipe(plumber())
           .pipe(changed(lessDest, {extension: '.css'}))
           .pipe(less({compress:true})).on('error', function(err){gutil.log(gutil.colors.red('less compile error!\n') + err.message)})
-          .pipe(sourcemaps.write('./sourcemaps'));
+          .pipe(sourcemaps.write('./sourcemaps'))
           .pipe(reload({stream:true}))
           .pipe(gulp.dest(lessDest));
     });
