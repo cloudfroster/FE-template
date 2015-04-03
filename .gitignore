@@ -14,8 +14,8 @@ node_modules
 npm-debug.log
 
 # project-specific
-public/css/sourcemaps
-public/js/sourcemaps
+public/css/sourcemaps/**/*.map
+public/js/sourcemaps/**/*.map
 public/**/*.min.js
 public/**/*.css
 !public/js/lib
