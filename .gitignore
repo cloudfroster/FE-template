@@ -1,0 +1,28 @@
+# OS and IDE
+.emacs*
+*.flymake
+*~
+.#*
+.idea
+*.sublime-*
+
+# phpmyadmin
+phpmyadmin/*
+
+# npm
+node_modules
+npm-debug.log
+
+# project-specific
+captcha/*
+images/testimage/*
+
+# grunt & gulp
+.grunt
+.gulp
+
+# gradle
+.gradle
+out
+.htaccess
+
