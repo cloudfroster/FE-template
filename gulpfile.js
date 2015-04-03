@@ -38,7 +38,7 @@ gulp.task('default',['compile-less', 'compile-coffee', 'compress-js', 'watch-com
     gutil.log('\n\n',gutil.colors.cyan('编译less为css,编译coffee为js完成.\n'),'默认不会打开browserSync工具.请使用',gutil.colors.red('gulp localhost'),'打开浏览器同步工具.\n' + 
     ' 编译规则:\n yyy.less   ---- yyy.css(压缩)\n xxx.coffee ---- xxx.min.js(压缩) \n yyy.js   ---- yyy.min.js(压缩) \n 产生的sourcemaps文件放在sourcemaps文件夹下.\n' + ' 开始监听less,coffee文件......\n');
 });
-gulp.task('localhost',['compile-less', 'compile-coffee', 'watch-compile-reload'],function() {
+gulp.task('localhost',['compile-less', 'compile-coffee', 'compress-js', 'watch-compile-reload'],function() {
     gutil.log('\n\n',gutil.colors.cyan('编译less为css,编译coffee为js完成.\n'),'打开browserSync工具\n' + 
     ' 编译规则:\n yyy.less   ---- yyy.css(压缩)\n xxx.coffee ---- xxx.min.js(压缩) \n yyy.js   ---- yyy.min.js(压缩) \n 产生的sourcemaps文件放在sourcemaps文件夹下.\n' + ' 开始监听less,coffee文件......\n');
 });
