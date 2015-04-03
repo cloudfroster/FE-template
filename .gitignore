@@ -14,8 +14,12 @@ node_modules
 npm-debug.log
 
 # project-specific
-captcha/*
-images/testimage/*
+public/css/sourcemaps
+public/js/sourcemaps
+public/**/*.min.js
+public/**/*.css
+!public/js/lib
+!public/css/lib
 
 # grunt & gulp
 .grunt
@@ -25,4 +29,3 @@ images/testimage/*
 .gradle
 out
 .htaccess
-
