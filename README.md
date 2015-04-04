@@ -6,6 +6,9 @@
 ### dependent IDE to compile less and coffee file.
 
 #change log
+## version 0.0.5
+###### add gitignore file,now build file will not push to git. fix some bug. 
+
 ## version 0.0.4
 ### change gulp task:
 ###### `gulp`  ------ watch less, coffee, js, and views direction files.when changed compile them.
