@@ -1,9 +1,6 @@
-#dingding-car front-end page
-
-#use marchen/FE-template
+#FE-template
 ### Individual front-end project template
 ### use nodejs + express + gulp + coffeescript + less + ejs + jquery1.11.2 + lessHat.less + marchen.less + normalize.css
-### dependent IDE to compile less and coffee file.
 
 #change log
 ## version 0.0.5
