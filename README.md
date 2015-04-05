@@ -6,7 +6,7 @@
 #change log
 ## version 0.0.6
 ###### add docs catalog to show how to use it
-###### add gulp-zip zip file to down
+###### add `gulp release' task to zip files to down
 
 ## version 0.0.5
 ###### add gitignore file,now build file will not push to git. fix some bug. 
