@@ -40,5 +40,26 @@ optgroup{font-weight:bold}
 table{border-collapse:collapse;border-spacing:0}
 td,th{padding:0}
 /*扩展*/
+/* pad and mobile */
+@media screen and (max-width: 1023px) {
+  html {
+   font-size: 16px; 
+  }
+}
+/* pc */
+@media screen and (min-width: 1024px) {
+  html {
+   font-size: 16px; 
+  }
+}
+/* then
+ * 12px = 0.75rem
+ * 14px = 0.875rem
+ * 16px = 1rem
+ * 18px = 1.125rem
+ * 20px = 1.25rem
+ * 30px = 1.875rem
+ * 32px = 2rem
+ */
 a{text-decoration: none;color: inherit;}
 ol,ul{list-style:none;margin:0;padding:0;}
