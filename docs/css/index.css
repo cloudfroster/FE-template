@@ -3,12 +3,14 @@ body {
 }
 header {
   background-color:rgb(63, 189, 255);
-  padding:70px;
+  padding:70px 5px;
 }
 .forkme {
   position:absolute;
   right:0;
   top:0;
+}
+.forkme img {
   width:149px;
   height:149px;
 }
@@ -46,6 +48,15 @@ header {
 .container {
   width:1100px;
   margin:0 auto;
+}
+@media screen and (max-width:1100px) {
+  .container {
+    width:100%;
+  }
+  .forkme img {
+    width:100px;
+    height:100px;
+  }
 }
 .headline {
   font-size:1.5rem;
