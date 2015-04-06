@@ -4,6 +4,11 @@
 ### use nodejs + express + gulp + coffeescript + less + ejs + jquery1.11.2 + lessHat.less + marchen.less + normalize.css
 
 #change log
+## version 0.0.7
+###### replace `gulp localhost` to `gulp proxy`,it will open browser to proxy `localhost:3000`,you can change it in gulpfile.js file
+###### add     `gulp server` to open static catalog, it will be compile
+###### add     `gulp server-no-compile` to open static catalog, it not to compile less or coffee or js files
+
 ## version 0.0.6
 ###### add docs catalog to show how to use it
 ###### add `gulp release` task to zip files to down
