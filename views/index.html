@@ -17,13 +17,19 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 	<title>前端标准模板</title>
 	<link rel="stylesheet" href="/css/lib/normalize.css">
-	<link rel="stylesheet" href="/css/index.css">
+	<link rel="stylesheet" href="../public/css/index.css">
 </head>
 <body>
 	<h1>欢迎使用该前端模板,开心你愉快的编程吧</h1>
 
     <!-- 引入脚本 -->
-	<script src="/js/lib/jquery-1.11.2.min.js"></script>
-	<script src="/js/index.min.js"></script>
+	<script src="../public/js/lib/jquery-1.11.2.min.js"></script>
+	<script src="../public/js/index.min.js">
+  </script>
+  <script type="text/javascript">
+  $('h1').click(function(){
+    $(this).fadeOut(300);
+  });
+  </script>
 </body>
 </html>
