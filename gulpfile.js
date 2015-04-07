@@ -27,7 +27,7 @@ var browserSync = require('browser-sync');  //浏览器同步
 var reload = browserSync.reload;		        //刷新浏览器
 
 
-var serverBaseUrl = './views/index.html';                   //browserSync 服务器模式目录
+var serverBaseUrl = './views/';             //browserSync 服务器模式目录
 var proxyUrl = "localhost:3000";            //browserSync 代理模式路径
 var viewsAJsUrl = ['./views/**/*.*','./public/js/**/*.min.js','!./public/js/lib/**/*.js'];
 var htmlAJsUrl = ['./views/**/*.*','./**/*.js'];
