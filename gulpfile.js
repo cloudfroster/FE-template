@@ -84,7 +84,7 @@ gulp.task('watch-compile', function() {
           .pipe(gulp.dest(lessDest))
           .pipe(sourcemaps.write('./sourcemaps'));
     });   
-    gulp.watch('./public/**', function() {
+    gulp.watch(coffeeUrl, function(event) {
        return gulp.src(coffeeUrl)
          .pipe(sourcemaps.init())
          .pipe(plumber())
