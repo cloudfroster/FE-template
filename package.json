@@ -1,6 +1,6 @@
 {
   "name": "FE-template",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "private": false,
   "author": "marchen",
   "scripts": {
@@ -31,6 +31,7 @@
     "gulp-sourcemaps": "^1.5.1",
     "gulp-uglify": "^1.1.0",
     "gulp-util": "^3.0.4",
+    "gulp-watch": "^4.2.4",
     "gulp-watch-less": "^1.0.1",
     "gulp-zip": "^3.0.2"
   }
