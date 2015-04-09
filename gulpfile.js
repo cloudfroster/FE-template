@@ -261,7 +261,7 @@ gulp.task('compile-coffee', function() {
 //|          发布,打包为zip
 //-------------------------------------------------//
 gulp.task('release', function() {
-  var zipName = 'FE-Template'+ pkg.version +'.zip';
+  var zipName = 'FE-Template.zip';
   gulp.src(releaseUrl)
     .pipe(zip(zipName,true))
     .pipe(gulp.dest('./release/latest/'));
