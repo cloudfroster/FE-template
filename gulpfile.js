@@ -39,7 +39,7 @@ var coffeeUrl = ['./public/js/**/*.coffee'];
 var coffeeDest = './public/js/';
 var jsUrl = ['./public/js/**/*.js','!./public/js/lib/**/*.js','!./public/js/**/*.min.js','!./public/js/**/*.map'];
 var jsDest = './public/js/';
-var releaseUrl = ['./**','!release/**','!node_modules/**','!npm-debug.log'];
+var releaseUrl = ['./**','!release/**','!node_modules/**','!docs/**', '!npm-debug.log'];
 //-------------------------------------------------//
 //| 默认开始编译所有less和coffee文件
 //| 监视css,js,和views下的的文件,刷新浏览器(注意:会去编译less和coffee)
