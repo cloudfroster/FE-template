@@ -15,6 +15,7 @@ var pkg = require('./package.json');
 var gulp = require('gulp');
 var zip = require("gulp-zip");              //压缩打包成zip
 var plumber = require('gulp-plumber');      //修复node错误
+var bower = require('gulp-bower');          //移动bower文件到指定位置
 var watch = require('gulp-watch');          //修复原本watch增加后不能监视的问题
 var gutil = require('gulp-util');           //gulp工具,用来在流中输出
 var changed = require('gulp-changed');      //只通过改变的文件流
@@ -32,14 +33,15 @@ var reload = browserSync.reload;		        //刷新浏览器
 
 var serverBaseUrl = './';                   //browserSync 服务器模式目录
 var proxyUrl = "localhost:3000";            //browserSync 代理模式路径
-var viewsAJsUrl = ['./views/**','./public/js/**/*.js','!./public/js/lib/**/*.js','!./public/js/**/*.map'];
-var lessUrl = ['./public/css/**/*.less','!./public/css/maxin/**/*.less','!./public/css/common/**/*.less'];
+var viewsAJsUrl = ['./views/**','./public/js/**/*.js','!./public/js/**/*.map'];
+var lessUrl = ['./public/css/**/*.less'];
 var lessDest = './public/css/';
 var coffeeUrl = ['./public/js/**/*.coffee'];
 var coffeeDest = './public/js/';
-var jsUrl = ['./public/js/**/*.js','!./public/js/lib/**/*.js','!./public/js/**/*.min.js','!./public/js/**/*.map'];
+var jsUrl = ['./public/js/**/*.js','!./public/js/**/*.min.js','!./public/js/**/*.map'];
 var jsDest = './public/js/';
 var releaseUrl = ['./**','!release/**','!node_modules/**','!docs/**', '!npm-debug.log'];
+var bowerDest = 'public/bower';
 //-------------------------------------------------//
 //| 默认开始编译所有less和coffee文件
 //| 监视css,js,和views下的的文件,刷新浏览器(注意:会去编译less和coffee)
@@ -60,16 +62,16 @@ var banner = [
         ' gulp server-no-compile - 只启用 browser-sync 的服务器模式,路径为是 ./(不会编译)',
         ' 正在监听文件改变......\n'
     ].join('\n');
-gulp.task('default',['compile-less', 'compile-coffee', 'compress-js', 'watch-compile'],function() {
+gulp.task('default',['compile-less', 'compile-coffee', 'compress-js', 'watch-compile', 'bower'],function() {
     gutil.log('\n\n',gutil.colors.cyan(welcome) + banner);
 });
-gulp.task('proxy',['compile-less', 'compile-coffee', 'compress-js', 'watch-compile-proxy-reload'],function() {
+gulp.task('proxy',['compile-less', 'compile-coffee', 'compress-js', 'watch-compile-proxy-reload', 'bower'],function() {
     gutil.log('\n\n',gutil.colors.cyan(welcome) + banner);
 });
-gulp.task('server',['compile-less', 'compile-coffee', 'compress-js', 'watch-compile-server-reload'],function() {
+gulp.task('server',['compile-less', 'compile-coffee', 'compress-js', 'watch-compile-server-reload', 'bower'],function() {
     gutil.log('\n\n',gutil.colors.cyan(welcome) + banner);
 });
-gulp.task('server-no-compile',['watch-server-reload'],function() {
+gulp.task('server-no-compile',['watch-server-reload', 'bower'],function() {
     gutil.log('\n\n',gutil.colors.cyan(welcome) + banner);
 });
     
@@ -116,6 +118,7 @@ gulp.task('watch-compile', function() {
 gulp.task('watch-compile-proxy-reload', function() {
     //打开浏览器同步工具
     browserSync({
+        port: 3002,
         proxy: proxyUrl
     });
     watch(lessUrl, function() {
@@ -255,6 +258,14 @@ gulp.task('compile-coffee', function() {
       .pipe(rename({suffix:'.min'}))
       .pipe(sourcemaps.write('./sourcemaps'))
       .pipe(gulp.dest(coffeeDest));
+});
+
+//-------------------------------------------------//
+//|          全部bower文件移动到public
+//-------------------------------------------------//
+gulp.task('bower', function() {
+  return bower()
+      .pipe(gulp.dest(bowerDest));
 });
 
 //-------------------------------------------------//

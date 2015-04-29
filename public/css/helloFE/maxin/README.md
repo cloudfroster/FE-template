@@ -1,3 +1,3 @@
-#less maxin catalog (for all site)
+#less maxin catalog
 ###put maxin less code in this catalog.never put less need compile in this catalog.
 ###this catalog gulp task will never compile less file.

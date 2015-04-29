@@ -1,0 +1,34 @@
+{
+  "name": "FE-template",
+  "version": "0.0.8",
+  "homepage": "https://github.com/chen844033231/FE-template",
+  "authors": [
+    "marchen <844033231@qq.com>"
+  ],
+  "description": "fe-template",
+  "main": "app.js",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "gulp",
+    "workflow"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "1.11.2",
+    "zepto": "~1.1.6",
+    "ractive": "~0.7.3",
+    "normalize.css": "~3.0.3",
+    "html5shiv": "~3.7.2"
+  }
+}

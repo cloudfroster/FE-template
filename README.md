@@ -4,6 +4,11 @@
 ### use nodejs + express + gulp + coffeescript + less + ejs + jquery1.11.2 + lessHat.less + marchen.less + normalize.css
 
 #change log
+## version 0.0.9
+###### add bower package manage
+###### increase the number of sites
+###### fix a number of bug
+
 ## version 0.0.8
 ###### fix gulp.watch(),if file add or create,then the new file will not be watch at all.
 ###### js lib add scrollReveal-2.2.0.min.js.

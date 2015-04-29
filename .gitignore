@@ -7,6 +7,10 @@
 .idea
 *.sublime-*
 
+# bower
+bower_components
+public/bower
+
 # phpmyadmin
 phpmyadmin/*
 
@@ -17,10 +21,6 @@ npm-debug.log
 # project-specific
 public/css/sourcemaps/**/*
 public/js/sourcemaps/**/*
-public/**/*.min.js
-public/**/*.css
-!public/js/lib
-!public/css/lib
 
 # grunt & gulp
 .grunt
