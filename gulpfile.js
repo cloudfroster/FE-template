@@ -276,5 +276,5 @@ gulp.task('release', function() {
   gulp.src(releaseUrl)
     .pipe(zip(zipName,true))
     .pipe(gulp.dest('./release/latest/'));
-  console.log(zipName + 'has released!');
+  console.log(zipName + ' has released!');
 });
