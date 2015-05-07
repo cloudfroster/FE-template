@@ -19,6 +19,7 @@ var bower = require('gulp-bower');          //移动bower文件到指定位置
 var watch = require('gulp-watch');          //修复原本watch增加后不能监视的问题
 var gutil = require('gulp-util');           //gulp工具,用来在流中输出
 var changed = require('gulp-changed');      //只通过改变的文件流
+var jade = require('gulp-jade');            //编译jade文件
 var less = require('gulp-less');            //编译less
 var watchLess = require('gulp-watch-less'); //监视less文件
 var coffee = require('gulp-coffee');        //编译coffee
@@ -41,6 +42,8 @@ var coffeeDest = './public/js/';
 var jsUrl = ['./public/js/**/*.js','!./public/js/**/*.min.js','!./public/js/**/*.map'];
 var jsDest = './public/js/';
 var releaseUrl = ['./**','!release/**','!node_modules/**','!docs/**', '!npm-debug.log'];
+var jadeUrl = ['./views/**.jade'];
+var jadeDest = './views/';
 var bowerDest = 'public/bower';
 //-------------------------------------------------//
 //| 默认开始编译所有less和coffee文件
@@ -54,6 +57,7 @@ var banner = [
         ' yyy.less   ---- yyy.css(压缩)',
         ' yyy.js     ---- yyy.min.js(压缩)',
         ' xxx.coffee ---- xxx.min.js(压缩)',
+        ' xxx.jade   ---- xxx.html(压缩)',
         ' 编译产生的sourcemaps放在sourcemaps文件夹下\n',
         ' 其他gulp 命令:',
         ' gulp default ---- 默认编译 public 除 lib 下所有less, coffee, js',
@@ -62,13 +66,13 @@ var banner = [
         ' gulp server-no-compile - 只启用 browser-sync 的服务器模式,路径为是 ./(不会编译)',
         ' 正在监听文件改变......\n'
     ].join('\n');
-gulp.task('default',['compile-less', 'compile-coffee', 'compress-js', 'watch-compile', 'bower'],function() {
+gulp.task('default',['compile-less', 'compile-coffee', 'compress-js', 'compile-jade', 'watch-compile', 'bower'],function() {
     gutil.log('\n\n',gutil.colors.cyan(welcome) + banner);
 });
-gulp.task('proxy',['compile-less', 'compile-coffee', 'compress-js', 'watch-compile-proxy-reload', 'bower'],function() {
+gulp.task('proxy',['compile-less', 'compile-coffee', 'compress-js','compile-jade', 'watch-compile-proxy-reload', 'bower'],function() {
     gutil.log('\n\n',gutil.colors.cyan(welcome) + banner);
 });
-gulp.task('server',['compile-less', 'compile-coffee', 'compress-js', 'watch-compile-server-reload', 'bower'],function() {
+gulp.task('server',['compile-less', 'compile-coffee', 'compress-js','compile-jade', 'watch-compile-server-reload', 'bower'],function() {
     gutil.log('\n\n',gutil.colors.cyan(welcome) + banner);
 });
 gulp.task('server-no-compile',['watch-server-reload', 'bower'],function() {
@@ -109,7 +113,11 @@ gulp.task('watch-compile', function() {
          .pipe(sourcemaps.write('./sourcemaps'))
          .pipe(gulp.dest(jsDest));
     });
-    
+    watch(jadeUrl, function() {
+       return gulp.src(jadeUrl)
+          .pipe(jade({}))
+          .pipe(gulp.dest(jadeDest));
+    });
 });
 
 //-------------------------------------------------//
@@ -151,6 +159,11 @@ gulp.task('watch-compile-proxy-reload', function() {
          .pipe(rename({suffix:'.min'}))
          .pipe(sourcemaps.write('./sourcemaps'))
          .pipe(gulp.dest(jsDest));
+    });
+    watch(jadeUrl, function() {
+       return gulp.src(jadeUrl)
+          .pipe(jade({}))
+          .pipe(gulp.dest(jadeDest));
     });
     watch(viewsAJsUrl, function() {
       reload();
@@ -198,6 +211,11 @@ gulp.task('watch-compile-server-reload', function() {
          .pipe(rename({suffix:'.min'}))
          .pipe(sourcemaps.write('./sourcemaps'))
          .pipe(gulp.dest(jsDest));
+    });
+    watch(jadeUrl, function() {
+       return gulp.src(jadeUrl)
+          .pipe(jade({}))
+          .pipe(gulp.dest(jadeDest));
     });
     watch(viewsAJsUrl, function() {
       reload();
@@ -259,6 +277,20 @@ gulp.task('compile-coffee', function() {
       .pipe(sourcemaps.write('./sourcemaps'))
       .pipe(gulp.dest(coffeeDest));
 });
+
+//-------------------------------------------------//
+//|          全部jade文件编译成html
+//-------------------------------------------------//
+gulp.task('compile-jade', function() {
+  var MY_LOCALS = {};
+   
+    gulp.src(jadeUrl)
+      .pipe(jade({
+        locals: MY_LOCALS
+      }))
+      .pipe(gulp.dest(jadeDest));
+});
+
 
 //-------------------------------------------------//
 //|          全部bower文件移动到public
