@@ -4,15 +4,25 @@
 @import './var';
 
 //******************************************* 清楚浮动 *********************************************/
-//清除浮动
+//清除浮动老版本
+// .clearfix() {
+//   *zoom: 1;
+//   &:after {
+//     display: block;
+//     clear: both;
+//     content: "";
+//     visibility: hidden;
+//     height: 0;
+//   }
+// }
+//清除浮动新版本
 .clearfix() {
-  zoom: 1;
+  *zoom: 1;
   &:after {
-    display: block;
-    clear: both;
-    content: "";
-    visibility: hidden;
-    height: 0;
+    content:"\200B"; 
+    display:block; 
+    height:0; 
+    clear:both; 
   }
 }
 //******************************************* 小工具 *********************************************/
