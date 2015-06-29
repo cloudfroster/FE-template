@@ -1,0 +1,11 @@
+# if you use it you should do
+first:
+  npm install
+next:
+  bower install
+next:
+  gulp or gulp bower
+
+# if you development you should do
+release:
+  gulp release

@@ -1,0 +1,46 @@
+//-  每个页面的布局
+
+include mixin
+
+//-  定义路径
+- var res = '../public/'
+- var css = '../public/css/'
+- var images = '../public/images/'
+- var js = '../public/js/'
+- var bower = '../public/bower/'
+
+doctype html
+html
+    head
+        meta(charset='utf-8')
+        meta(http-equiv='X-UA-Compatible', content='IE=edge')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        // <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        // 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！
+        <!--[if lt IE 9]>
+        script(src='#{bower}html5shiv/dist/html5shiv.min.js')
+        <![endif]-->
+        meta(name='apple-mobile-web-app-capable', content='yes')
+        // 苹果允许全屏模式
+        meta(name='apple-mobile-web-app-status-bar-style', content='black')
+        // 苹果浏览器顶部状态栏颜色
+        meta(name='format-detection', content='telephone=no')
+        // 忽略数字为电话号码
+        link(rel='apple-touch-icon-precomposed', href='#{res}favicon.png')
+        link(rel='shortcut icon', href='#{res}favicon.png')
+        link(rel='icon', type='image/x-icon', href='#{res}favicon.png')
+        block title
+            title 标题
+        append style
+            link(rel='stylesheet', href='#{css}common/common.css')
+    body        
+        // 头部
+        +siteHeader()
+
+        block body
+
+        // 尾部
+        +siteFooter()
+
+        append script
+            script(src='#{bower}jquery/dist/jquery.min.js')

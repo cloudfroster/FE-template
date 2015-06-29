@@ -21,6 +21,7 @@ npm-debug.log
 # project-specific
 public/css/sourcemaps/**/*
 public/js/sourcemaps/**/*
+public/**/*.css
 
 # grunt & gulp
 .grunt

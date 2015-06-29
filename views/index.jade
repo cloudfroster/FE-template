@@ -1,0 +1,13 @@
+extends common/layout
+
+block title
+	title 标题
+
+append style
+	link(rel='styleSheet', href='#{css}index.css')
+
+block body
+	h1 欢迎使用前端模板
+
+append script
+	script(src='#{js}index.js')

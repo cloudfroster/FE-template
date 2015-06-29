@@ -1,2 +1,2 @@
-#Image catalog (for all site)
+#Image catalog
 ###put images file in this catalog.

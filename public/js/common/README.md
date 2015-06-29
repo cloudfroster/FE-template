@@ -1,2 +1,2 @@
-#js common catalog (for all site)
+#js common catalog 
 ###put common coffee or js code in this catalog.

@@ -4,6 +4,9 @@
 ### use nodejs + express + gulp + coffeescript + less + ejs + jquery1.11.2 + lessHat.less + marchen.less + normalize.css
 
 #change log
+## version 0.1.1
+###### optimization directory, fix a little bug
+
 ## version 0.1.0
 ###### add jade file
 
