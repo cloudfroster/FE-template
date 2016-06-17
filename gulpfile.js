@@ -3,7 +3,6 @@
  * made by marchen
  * time 2015/4/2
  * task gulp default            编译,监听
- *      gulp proxy              编译,监听,打开浏览器同步工具(代理模式)
  *      gulp server             编译,监听,打开浏览器同步工具(静态页面模式)
  *      gulp server-no-compile  监听,打开浏览器同步工具(静态页面模式)
  *      gulp release            这条命令适合开发这个库的开发者使用
