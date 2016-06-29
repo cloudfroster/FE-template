@@ -1,1 +1,0 @@
-#view common file (for all site)

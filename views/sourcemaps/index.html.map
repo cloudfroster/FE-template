@@ -1,0 +1,1 @@
+{"version":3,"names":[],"mappings":"","sources":["index.pug"],"sourcesContent":["extends common/layout\n\nblock title\n\ttitle 标题\n\nappend style\n\tlink(rel='styleSheet', href='#{css}index.css')\n\nblock body\n\th1 欢迎使用前端模板\n\nappend script\n\tscript(src='#{js}index.js')"],"file":"index.html","sourceRoot":"/source/"}
